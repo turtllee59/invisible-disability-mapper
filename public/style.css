@@ -1,0 +1,265 @@
+/* --- Body & Fonts --- */
+body {
+ font-family: 'Courier New';
+ background: linear-gradient(to bottom, #f4fbf4, #fff);
+ margin: 0;
+ padding: 20px;
+}
+
+
+/* --- Container Layout --- */
+#container {
+ display: flex;
+ gap: 15px;
+ height: 500px;
+}
+
+
+/* --- Sidebar --- */
+/* Sage green themed sidebar */
+#sidebar {
+ width: 300px;
+ padding: 15px;
+ border-radius: 10px;
+ background: #fbfff9;
+ box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+ overflow-y: auto;
+ border: 1px solid #e6f2e6;
+}
+
+
+/* make sidebar visually match project color palette */
+#sidebar .form-control, #sidebar .form-select, #sidebar .btn {
+ border-radius: 6px;
+}
+#sidebar .btn-primary {
+ background: #9CAF88;
+ border-color: #9CAF88;
+}
+#sidebar .alert {
+ background: #eef7ee;
+ color: #244f2a;
+ border-color: #dbeedc;
+}
+
+
+/* Apply same green styling to all primary buttons */
+.btn-primary {
+ background: #9CAF88;
+ border-color: #9CAF88;
+}
+.btn-primary:hover {
+ background: #7a9a6b;
+ border-color: #7a9a6b;
+}
+
+
+/* --- Map --- */
+#map {
+ flex: 1;
+ border-radius: 10px;
+ border: 2px solid #ccc;
+}
+
+
+/* --- Headings --- */
+h1, h2, h3, h4 {
+ 
+ color: #356c2e;
+}
+
+
+/* --- Tabs --- */
+.nav-tabs .nav-link {
+ border-radius: 8px 8px 0 0;
+ color: #356c2e;
+}
+.nav-tabs .nav-link.active {
+ background-color: #e7f3e8;
+ color: #000;
+ border-color: #9CAF88 #9CAF88 #fff;
+}
+
+
+/* --- Buttons --- */
+.btn {
+ border-radius: 6px;
+ transition: 0.2s;
+}
+.btn:hover {
+ opacity: 0.85;
+}
+.btn-secondary.active {
+ background-color: #9CAF88;
+ border-color: #9CAF88;
+ color: #fff;
+}
+
+
+/* --- Forms --- */
+form {
+ background: #fbfff9;
+ padding: 15px;
+ border-radius: 8px;
+ box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+ margin-top: 20px;
+}
+/* style the review form to match sidebar */
+#reviews-section form .form-control, #reviews-section form .form-select {
+ border-radius: 6px;
+}
+#reviews-section .nav-tabs .nav-link.active {
+ background-color: #e7f3e8;
+ color: #000;
+ border-color: #9CAF88 #9CAF88 #fff;
+}
+
+
+/* cluster / marker icon styles for divIcon */
+.poi-icon {
+ width: 14px;
+ height: 14px;
+ background: #cfe6c9;
+ border-radius: 50%;
+ display: block;
+ box-shadow: 0 0 0 2px rgba(0,0,0,0.04) inset;
+ border: 2px solid #fff;
+}
+.review-icon {
+ width: 14px;
+ height: 14px;
+ background: #9CAF88;
+ border-radius: 50%;
+ display: block;
+ box-shadow: 0 0 0 2px rgba(0,0,0,0.04) inset;
+ border: 2px solid #fff;
+}
+
+
+/* improve list item hover to match palette */
+.list-group-item:hover { background: #f0f8f0; }
+input, select, textarea {
+ border-radius: 5px;
+ border: 1px solid #cfe6d0;
+ padding: 5px;
+ width: 100%;
+ margin-bottom: 10px;
+}
+
+
+/* --- List items --- */
+.list-group-item:hover {
+ background-color: #eef7ee;
+ cursor: pointer;
+}
+
+
+/* --- Selected coordinates / messages --- */
+#selectedCoords {
+ font-weight: bold;
+ color: #356c2e;
+}
+#messageBox {
+ padding: 8px;
+ border-radius: 6px;
+ background-color: #eef7ee;
+ color: #244f2a;
+ margin-top: 10px;
+ transition: opacity 0.3s;
+}
+
+
+/* --- Minor extra touches --- */
+::-webkit-scrollbar {
+ width: 6px;
+}
+::-webkit-scrollbar-thumb {
+ background: #9CAF88;
+ border-radius: 3px;
+}
+.darkgreen{
+  color: #356c2e;
+}
+
+
+/* --- Challenge Rating Sliders --- */
+.challenge {
+ margin-bottom: 15px;
+ padding: 10px;
+ background: #f8fdf8;
+ border-radius: 8px;
+ border: 1px solid #e6f2e6;
+}
+
+
+.challenge label {
+ display: block;
+ font-weight: 500;
+ color: #356c2e;
+ margin-bottom: 8px;
+}
+
+
+.challenge .form-range {
+ margin-bottom: 5px;
+}
+
+
+.challenge .slider-value {
+ text-align: center;
+ font-weight: bold;
+ color: #9CAF88;
+ font-size: 14px;
+}
+
+
+/* Custom slider styling to match theme */
+.form-range {
+ -webkit-appearance: none;
+ appearance: none;
+ background: transparent;
+ cursor: pointer;
+}
+
+
+.form-range::-webkit-slider-track {
+ background: #e6f2e6;
+ height: 8px;
+ border-radius: 4px;
+}
+
+
+.form-range::-webkit-slider-thumb {
+ -webkit-appearance: none;
+ appearance: none;
+ background: #9CAF88;
+ height: 20px;
+ width: 20px;
+ border-radius: 50%;
+ border: 2px solid #fff;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.form-range::-webkit-slider-thumb:hover {
+ background: #7a9a6b;
+}
+
+
+.form-range::-moz-range-track {
+ background: #e6f2e6;
+ height: 8px;
+ border-radius: 4px;
+ border: none;
+}
+
+
+.form-range::-moz-range-thumb {
+ background: #9CAF88;
+ height: 20px;
+ width: 20px;
+ border-radius: 50%;
+ border: 2px solid #fff;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+ cursor: pointer;
+}

@@ -1,0 +1,17 @@
+{
+  "name": "invisible-disability-mapper",
+  "version": "1.0.0",
+  "description": "A web app for mapping and reviewing accessibility for invisible disabilities",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": ["accessibility", "disability", "mapping", "neurodivergent"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "dotenv": "^16.0.3"
+  }
+}

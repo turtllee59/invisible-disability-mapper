@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>Invisible Disability Mapper 🌍</title>
+
+
+ <!-- prevent automatic /favicon.ico 404 by explicitly providing a favicon -->
+ <link rel="icon" href="assets/demo-screenshot.svg" type="image/svg+xml" />
+
+
+ <!-- leaflet css for the map -->
+ <link
+   rel="stylesheet"
+   href="https://unpkg.com/leaflet/dist/leaflet.css"
+ />
+
+
+ <!-- bootstrap-->
+ <link
+   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+   rel="stylesheet"
+ />
+
+
+ <!-- Your own style file -->
+ <link rel="stylesheet" href="style.css" />
+</head>
+<body class="container my-4">
+
+
+  <h1>Invisible Disability Mapper</h1>
+ <p>Click on the map to select a location and submit a review about sensory, cognitive, and physical challenges you experienced.</p>
+
+
+ <!-- map container -->
+ <!-- wraps map and sidebar -->
+ <div id="container">
+   <div id="map" style="flex: 1;"></div>
+
+
+   <!-- sidebar for places -->
+   <div id="sidebar" style="width:300px; overflow-y:auto; border-left:1px solid #ccc; padding:10px;">
+     <div class="mb-2">
+       <h5 style="margin:0;">Locations</h5>
+     </div>
+ <div id="selectedCoords" style="margin-bottom:8px; font-weight:bold; color:#d63384;">No location selected</div>
+     <div class="mb-3">
+       <label class="form-label">City, State, Country</label>
+       <div class="row g-2">
+         <div class="col-4">
+           <input type="text" id="cityInput" class="form-control" placeholder="City" />
+         </div>
+         <div class="col-4">
+           <input type="text" id="stateInput" class="form-control" placeholder="State" />
+         </div>
+         <div class="col-4">
+           <select id="countrySelect" class="form-select" required>
+             <option value="">Country</option>
+             <option value="United States">United States</option>
+             <option value="Canada">Canada</option>
+             <option value="United Kingdom">United Kingdom</option>
+             <option value="Australia">Australia</option>
+             <option value="France">France</option>
+             <option value="Germany">Germany</option>
+             <option value="Mexico">Mexico</option>
+             <option value="India">India</option>
+             <option value="Other">Other</option>
+           </select>
+         </div>
+       </div>
+     </div>
+
+
+     <div class="mb-3">
+       <label for="placeNameInput" class="form-label">Place name</label>
+       <input
+         type="search"
+         id="placeNameInput"
+         class="form-control"
+         placeholder="e.g. McDonald's"
+       />
+     </div>
+
+
+     <div class="mb-3">
+       <label for="categorySelect" class="form-label">Category</label>
+       <div class="input-group">
+         <select id="categorySelect" class="form-select">
+           <option value="">-- pick a category --</option>
+           <option value="catering.restaurant">Restaurants</option>
+           <option value="commercial.supermarket">Supermarkets</option>
+           <option value="entertainment.cinema">Cinemas</option>
+           <option value="catering.cafe">Coffee / Cafes</option>
+           <option value="commercial.convenience">Convenience stores</option>
+           <option value="commercial.food_and_drink.fruit_and_vegetable">Produce / Farmers' markets</option>
+           <option value="catering.fast_food">Fast food</option>
+           <option value="catering.bakery">Bakery</option>
+           <option value="catering.bar">Bar</option>
+           <option value="healthcare.pharmacy">Pharmacy</option>
+           <option value="service.vehicle.fuel">Gas / Fuel</option>
+           <option value="commercial.shopping_mall">Shopping mall</option>
+           <option value="commercial.discount_store">Discount store</option>
+         </select>
+       </div>
+      
+     </div>
+
+
+     <div class="mb-2">
+       <label class="form-label">Search radius</label>
+       <div class="input-group">
+         <input type="number" id="radiusKmInput" class="form-control" min="1" value="100" aria-label="radius km" />
+         <span class="input-group-text">km</span>
+       </div>
+       <div class="form-check mt-1">
+         <input class="form-check-input" type="checkbox" value="" id="progressiveFallbackCheckbox" checked>
+         <label class="form-check-label small" for="progressiveFallbackCheckbox">Auto-expand radius if few/no results</label>
+       </div>
+     </div>
+
+
+     <button id="searchPlacesBtn" class="btn btn-primary mb-3">Search Places</button>
+     <div id="messageBox" class="alert alert-info d-none" style="margin-top:8px;"></div>
+   <ul id="locationsList" style="list-style:none; padding-left:0; margin-top:8px;"></ul>
+   </div>
+ </div>
+
+
+ <!-- NOTE: messageBox already exists in sidebar; keep a single instance there -->
+
+
+ <!-- review form -->
+ <br>
+     <div id="reviews-section">
+     <h2>User Reviews</h2>
+
+
+     <!-- Reviews area: Bootstrap tabs for Submit / Past Reviews -->
+     <ul class="nav nav-tabs mb-2" id="reviewsTabNav" role="tablist">
+       <li class="nav-item" role="presentation"><button class="nav-link active" id="submit-tab" data-bs-toggle="tab" data-bs-target="#tabSubmit" type="button" role="tab" aria-controls="tabSubmit" aria-selected="true">Submit Review</button></li>
+       <li class="nav-item" role="presentation"><button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#tabPast" type="button" role="tab" aria-controls="tabPast" aria-selected="false">Past Reviews</button></li>
+     </ul>
+
+
+     <div class="tab-content">
+     <div id="tabSubmit" class="tab-pane fade show active">
+     <!-- Review form with separate city/state/country inputs -->
+     <form id="reviewForm">
+     <div class="row g-2 mb-2">
+         <div class="col-4">
+           <input id="reviewCityInput" class="form-control" placeholder="City" />
+       </div>
+       <div class="col-4">
+         <input id="reviewStateInput" class="form-control" placeholder="State" />
+       </div>
+       <div class="col-4">
+         <input id="reviewCountryInput" class="form-control" placeholder="Country" required />
+       </div>
+     </div>
+
+
+     <div class="mb-2">
+       <label for="reviewPlaceNameInput">Place name:</label>
+       <input id="reviewPlaceNameInput" class="form-control" placeholder="e.g. McDonald's" />
+     </div>
+
+
+     <div class="mb-2">
+       <label for="reviewAddressInput">Address:</label>
+       <input id="reviewAddressInput" class="form-control" placeholder="Street address, city" />
+     </div>
+
+
+     <div style="margin-top:10px;">
+       <label for="review-text">Your review:</label>
+       <textarea id="review-text" class="form-control" placeholder="Share your experience..."></textarea>
+     </div>
+
+
+     <!-- New invisible disability challenge rankings -->
+      <h3 style= "margin-top:12px;">Challenges</h3>
+     <h4 style="margin-top:12px;">1:extreme challenge --> 5: comfortable experience:</h4>
+
+
+     <div class="challenge">
+       <label>Sensory Overload:</label>
+       <input type="range" min="1" max="5" value="3" class="challenge-rating form-range" data-challenge="sensory">
+       <div class="slider-value">3</div>
+     </div>
+
+
+     <div class="challenge">
+       <label>Cognitive & Mental Fatigue:</label>
+       <input type="range" min="1" max="5" value="3" class="challenge-rating form-range" data-challenge="cognitive">
+       <div class="slider-value">3</div>
+     </div>
+
+
+     <div class="challenge">
+       <label>Pain & Physical Limitations:</label>
+       <input type="range" min="1" max="5" value="3" class="challenge-rating form-range" data-challenge="pain">
+       <div class="slider-value">3</div>
+     </div>
+
+
+     <div class="challenge">
+       <label>Social Challenges:</label>
+       <input type="range" min="1" max="5" value="3" class="challenge-rating form-range" data-challenge="social">
+       <div class="slider-value">3</div>
+     </div>
+
+
+     <div class="challenge">
+       <label>Emotional / Mental Health:</label>
+       <input type="range" min="1" max="5" value="3" class="challenge-rating form-range" data-challenge="mental">
+       <div class="slider-value">3</div>
+     </div>
+
+
+     <div class="challenge">
+       <label>Healthcare & Accommodation:</label>
+       <input type="range" min="1" max="5" value="3" class="challenge-rating form-range" data-challenge="healthcare">
+       <div class="slider-value">3</div>
+     </div>
+
+
+     <div class="challenge">
+       <label>Fatigue Management:</label>
+       <input type="range" min="1" max="5" value="3" class="challenge-rating form-range" data-challenge="fatigue">
+       <div class="slider-value">3</div>
+     </div>
+
+
+     <div style="margin-top:12px;">
+       <div id="reviewFormErrors" class="text-danger mb-2 d-none" aria-live="polite"></div>
+       <div id="reviewCoordsDisplay" style="font-weight:bold; margin-bottom:8px;">Coords: none</div>
+       <button type="submit" class="btn btn-primary">Submit Review</button>
+     </div>
+   </form>
+   </div>
+
+
+   <div id="tabPast" class="tab-pane fade">
+     <div class="mb-2">
+       <label class="form-label">Filter by location</label>
+       <div class="row g-2">
+         <div class="col-4"><input id="filterCity" class="form-control" placeholder="City"/></div>
+         <div class="col-4"><input id="filterState" class="form-control" placeholder="State"/></div>
+         <div class="col-4"><select id="filterCountry" class="form-select"><option value="">Any country</option><option>United States</option><option>Canada</option><option>United Kingdom</option><option>Australia</option><option>Other</option></select></div>
+       </div>
+     </div>
+     <div class="mb-2">
+ <label class="form-label">Filter by category</label>
+ <input id="filterCategoryInput" class="form-control" placeholder="Type or pick a category" />
+     </div>
+     <div class="mb-2">
+       <button id="applyFiltersBtn" class="btn btn-sm btn-secondary">Apply filters</button>
+       <button id="clearFiltersBtn" class="btn btn-sm btn-outline-secondary ms-2">Clear filters</button>
+     </div>
+     <ul id="listContainer" style="list-style:none; padding-left:0;"></ul>
+   </div>
+   </div>
+</div>
+
+
+
+
+ <!-- leaflet JS for map -->
+ <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+ <!-- markercluster for clustering POIs and reviews -->
+ <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+ <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+ <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+ <!-- bootstrap JS bundle (for tabs) -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+ <script src="app.js"></script>
+ </body>
+</html>
