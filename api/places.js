@@ -20,21 +20,11 @@ export default async function handler(req, res) {
   }
   
   try {
-    // Use the correct Geoapify Places API endpoint with proper parameter format
+    // Use the correct Geoapify Places API endpoint
     let url = `https://api.geoapify.com/v2/places?`;
     
-    // Parse and format the filter parameter correctly for Geoapify
-    if (filter.startsWith('circle:')) {
-      // Format: circle:lon,lat,radius
-      const coords = filter.replace('circle:', '');
-      url += `filter=circle:${coords}`;
-    } else if (filter.startsWith('rect:')) {
-      // Format: rect:lon1,lat1,lon2,lat2  
-      const bounds = filter.replace('rect:', '');
-      url += `filter=rect:${bounds}`;
-    } else {
-      url += `filter=${encodeURIComponent(filter)}`;
-    }
+    // Always include filter parameter properly formatted
+    url += `filter=${encodeURIComponent(filter)}`;
     
     // If no categories specified, use a broad commercial category
     const categoriesParam = categories || 'commercial';
