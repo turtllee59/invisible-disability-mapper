@@ -118,7 +118,7 @@ This project was developed as part of my computer science coursework, with a foc
 - **Responsive web development** best practices
 - **User experience research** in accessibility space
 
-*I received assistance from GitHub Copilot for certain coding challenges, particularly around API integration and responsive design implementation, but the core concept, accessibility focus, and user experience design were entirely my own.*
+*I received assistance from GitHub Copilot for certain coding challenges, particularly around API integration and responsive design implementation, but the baseline code, core concept, accessibility focus, and user experience design were entirely my own.*
 
 ## Why This Matters
 
