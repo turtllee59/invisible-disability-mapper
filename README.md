@@ -1,32 +1,32 @@
 # Invisible Disability Mapper
 
-*An accessibility-focused web application designed to help neurodivergent individuals navigate public spaces with confidence.*
+*An accessibility-focused web app empowering neurodivergent individuals—and anyone who benefits from sensory-aware spaces—to navigate public environments with confidence and ease.*
 
 🌐 **[Try the Live Application](https://invisible-disability-mapper.vercel.app)** 🌐
 
 ## Project Overview
 
-I created this web application to help people with invisible disabilities make informed decisions about where to go. Traditional accessibility tools often focus on physical barriers, but sensory challenges like noise levels, lighting, and crowd density are also important to consider for many.
+I created Invisible Disability Mapper to help people with invisible disabilities make informed decisions about where to go. Navigating public spaces can be challenging due to factors like sensory overload, social challenges, and fatigue management. This app helps address those issues by using community-driven insights, empowering users to approach environments with confidence and support.
 
-This project combines interactive mapping technology with user-generated accessibility reviews, specifically designed with neurodivergent-friendly UI principles in mind.
+This project combines interactive mapping technology with user-generated accessibility reviews, specifically designed with neurodivergent-friendly and sensory aware UI principles in mind.
 
 ## Key Features
 
 ### Neurodivergent-Friendly Design
-- **Calming color palette**: Sage green theme (#9CAF88) to reduce visual stress
-- **Clear navigation**: Simple, intuitive interface with minimal cognitive load
+- **Calming color palette**: Sage green theme (#9CAF88) to create a calm UI.
+- **Clear navigation**: Simple, intuitive interface 
 - **Accessible typography**: Courier New font for improved readability
-- **Gentle gradients**: Subtle visual elements that don't overwhelm
+- **Gentle gradients**: Subtle visual elements that enhance interface without extra distraction
 
 ### Sensory Challenge Rating System
-Instead of traditional accessibility ratings, I implemented **7 specialized sliders** that matter most to neurodivergent individuals:
-- **Noise Level** (1-10): How loud/overwhelming the environment is
-- **Lighting Quality** (1-10): Harshness vs. comfortable lighting
-- **Crowd Density** (1-10): How busy/crowded the space gets
-- **Sensory Overload Risk** (1-10): Overall sensory intensity
-- **Social Interaction Required** (1-10): How much social engagement is expected
-- **Predictability** (1-10): How routine/structured the environment is
-- **Flexibility** (1-10): How accommodating staff/environment is to different needs
+I implemented **7 specialized sliders** that matter most to neurodivergent individuals:
+- **Sensory Overload** (1-5): How manageable sensory input is (e.g. lights, sounds, smells). Higher scores indicate a calmer, more comfortable environment.
+- **Cognitive and Mental Fatigue** (1-5): How mentally demanding an environment is. Higher scores would indicate lower fatigue and easier cognitive processing. 
+- **Pain and Physical Limitations** (1-5): Degree to which physical barriers or discomfort affect the accessibility of a location. Higher scores indicate that a space is easier to navigate physically.
+- **Social Challenges** (1-5): Levels of social interaction required. Higher scores indicate more calm and supportive social environments.
+- **Emotional/Mental Health** (1-5): How the environment affects stress, anxiety, or emotional well-being. Higher scores mean a more supportive experience.
+- **Healthcare and Accommodation** (1-5): Availability of accommodations, support staff, or resources. Higher scores indicate better access and support.
+- **Fatigue Management** (1-5): How easily users can rest, pace themselves, and manage energy in the location. Higher scores would indicate better fatigue management.
 
 ### Interactive Mapping
 - **Real-time location search** using Geoapify API
