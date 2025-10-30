@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
  const reviewIcon = L.divIcon({ className: 'review-icon', iconSize: [14, 14] });
 
 
- // The server proxies Geoapify requests at /api/proxy/* so the API key remains server-side.
+ // The server provides API endpoints at /api/* so the API key remains server-side.
 
 
  // tab switching logic
@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
      // call server-side proxy to avoid exposing API key to the browser
-     const url = `/api/proxy/places?categories=${encodeURIComponent(category)}&filter=rect:${bounds}&limit=50`;
+     const url = `/api/places?categories=${encodeURIComponent(category)}&filter=rect:${bounds}&limit=50`;
      const resp = await fetch(url);
      const data = await resp.json();
 
@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
    try {
      showMessage('Searching...');
      // 1. geocode city/country -> get bounding box via server proxy
-     const geoUrl = `/api/proxy/geocode?text=${encodeURIComponent(locationText)}`;
+     const geoUrl = `/api/geocode?query=${encodeURIComponent(locationText)}`;
      const geoResp = await fetch(geoUrl);
      // If the proxy returned an error (e.g. missing API key), surface it to the user
      if (!geoResp.ok) {
@@ -568,14 +568,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
      // Helper to build circle or rect URL for a given radius
      const buildUrlForRadius = (r) => {
-       if (!useRect) return `/api/proxy/places?filter=circle:${centerLon},${centerLat},${r}&limit=100`;
+       if (!useRect) return `/api/places?filter=circle:${centerLon},${centerLat},${r}&limit=100`;
        if (Array.isArray(feature.bbox) && feature.bbox.length === 4) {
          const b = feature.bbox;
-         return `/api/proxy/places?filter=rect:${b[0]},${b[1]},${b[2]},${b[3]}&limit=100`;
+         return `/api/places?filter=rect:${b[0]},${b[1]},${b[2]},${b[3]}&limit=100`;
        }
        if (feature.properties && feature.properties.bounds) {
          const bb = feature.properties.bounds;
-         return `/api/proxy/places?filter=rect:${bb.west},${bb.south},${bb.east},${bb.north}&limit=100`;
+         return `/api/places?filter=rect:${bb.west},${bb.south},${bb.east},${bb.north}&limit=100`;
        }
        return null;
      };

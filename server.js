@@ -31,7 +31,10 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API proxy endpoints
+console.log('Setting up API routes...');
+
 app.get('/api/geocode', async (req, res) => {
+  console.log('Geocode endpoint hit with query:', req.query);
   const { query } = req.query;
   if (!query) {
     return res.status(400).json({ error: 'Query parameter required' });
@@ -50,20 +53,42 @@ app.get('/api/geocode', async (req, res) => {
 });
 
 app.get('/api/places', async (req, res) => {
-  const { bbox, categories } = req.query;
-  if (!bbox) {
-    return res.status(400).json({ error: 'Bounding box required' });
+  console.log('Places endpoint hit with query:', req.query);
+  console.log('Available parameters:', Object.keys(req.query));
+  const { filter, categories, name } = req.query;
+  
+  if (!filter) {
+    console.log('ERROR: No filter parameter found!');
+    console.log('All query params:', JSON.stringify(req.query, null, 2));
+    return res.status(400).json({ error: 'Filter parameter required' });
   }
   
   try {
-    let url = `https://api.geoapify.com/v2/places?filter=rect:${bbox}&limit=50&apiKey=${process.env.GEOAPIFY_KEY}`;
-    if (categories) {
-      url += `&categories=${categories}`;
+    // Parse the filter parameter to rebuild the URL correctly
+    let url = `https://api.geoapify.com/v2/places?`;
+    
+    // Add filter parameter
+    url += `filter=${encodeURIComponent(filter)}`;
+    
+    // If no categories specified, use a broad commercial category
+    const categoriesParam = categories || 'commercial';
+    url += `&categories=${categoriesParam}`;
+    
+    if (name) {
+      url += `&name=${encodeURIComponent(name)}`;
     }
+    
+    url += `&limit=100&apiKey=${process.env.GEOAPIFY_KEY}`;
+    
+    console.log('Making Geoapify request to:', url.replace(process.env.GEOAPIFY_KEY, 'API_KEY_HIDDEN'));
     
     const fetch = (await import('node-fetch')).default;
     const response = await fetch(url);
     const data = await response.json();
+    
+    console.log('Geoapify response status:', response.status);
+    console.log('Features found:', data.features ? data.features.length : 0);
+    
     res.json(data);
   } catch (error) {
     console.error('Places error:', error);
@@ -97,4 +122,9 @@ app.post('/api/reviews', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
+  console.log('Available routes:');
+  console.log('- GET /api/geocode');
+  console.log('- GET /api/places');
+  console.log('- GET /api/reviews');
+  console.log('- POST /api/reviews');
 });
