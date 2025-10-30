@@ -2,6 +2,8 @@
 
 *An accessibility-focused web application designed to help neurodivergent individuals navigate public spaces with confidence.*
 
+🌐 **[Try the Live Application](https://invisible-disability-mapper.vercel.app)** 🌐
+
 ## Project Overview
 
 I created this web application to help people with invisible disabilities make informed decisions about where to go. Traditional accessibility tools often focus on physical barriers, but sensory challenges like noise levels, lighting, and crowd density are also important to consider for many.
